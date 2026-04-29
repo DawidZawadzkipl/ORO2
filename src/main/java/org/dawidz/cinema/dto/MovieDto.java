@@ -1,4 +1,8 @@
 package org.dawidz.cinema.dto;
 
-public class MovieDto {
+public record MovieDto(
+        Long id,
+        String title
+) {
+
 }

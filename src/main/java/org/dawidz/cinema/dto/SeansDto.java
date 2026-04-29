@@ -4,7 +4,9 @@ import java.time.LocalDateTime;
 
 public record SeansDto(
         Long id,
+        Long movieId,
         String movieTitle,
-        LocalDateTime dateTime,
-        Long RoomId
+        Long RoomId,
+        int roomNumber,
+        LocalDateTime dateTime
 ){}

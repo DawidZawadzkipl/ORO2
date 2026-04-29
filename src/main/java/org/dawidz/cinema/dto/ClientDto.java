@@ -1,4 +1,8 @@
 package org.dawidz.cinema.dto;
 
-public class ClientDto {
+public record ClientDto(
+        Long id,
+        String name,
+        String login
+){
 }

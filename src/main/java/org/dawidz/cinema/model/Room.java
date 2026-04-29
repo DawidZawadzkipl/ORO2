@@ -1,13 +1,14 @@
 package org.dawidz.cinema.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -16,7 +17,12 @@ import lombok.Setter;
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
+    @Setter(AccessLevel.NONE)
+    private Long id;
     private int roomNumber;
+    @OneToMany(mappedBy = "room")
+    @Setter(AccessLevel.NONE)
+    private List<Seat> seats = new ArrayList<>();
+
+    private boolean active = true;
 }

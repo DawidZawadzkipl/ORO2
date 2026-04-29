@@ -2,6 +2,7 @@ package org.dawidz.cinema.model;
 
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,13 +12,19 @@ import org.dawidz.cinema.model.enums.TicketType;
 import java.time.LocalDate;
 
 @Entity
+@Table(
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"seans_id", "seat_id"})
+        }
+)
 @NoArgsConstructor
 @Getter
 @Setter
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @Setter(AccessLevel.NONE)
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "client_id")

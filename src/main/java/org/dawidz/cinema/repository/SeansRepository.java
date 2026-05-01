@@ -1,5 +1,6 @@
 package org.dawidz.cinema.repository;
 
+import org.dawidz.cinema.dto.ClientDto;
 import org.dawidz.cinema.dto.SeansDto;
 import org.dawidz.cinema.model.Movie;
 import org.dawidz.cinema.model.Seans;
@@ -25,5 +26,57 @@ public interface SeansRepository extends JpaRepository<Seans, Long> {
         join s.room r
         where r.id = :roomId
 """)
-    Page<SeansDto> findSeansesByRoomId(Long roomId, Pageable pageable);
+    Page<SeansDto> findSeanssByRoomId(Long roomId, Pageable pageable);
+    //3
+    @Query("""
+            select new org.dawidz.cinema.dto.SeansDto(
+                        s.id,
+                        m.id,
+                        m.title,
+                        r.id,
+                        r.roomNumber,
+                        s.dateTime
+                        )
+            from Seans s
+            join s.movie m
+            join s.room r
+            where m.id = :movieId
+            and s.cancelled = false
+            and m.active = true
+            and r.active = true
+            """)
+    Page<SeansDto> findSeansOfMovieById(Long movieId, Pageable pageable);
+    //4
+    @Query("""
+            select new org.dawidz.cinema.dto.SeansDto(
+                        s.id,
+                        m.id,
+                        m.title,
+                        r.id,
+                        r.roomNumber,
+                        s.dateTime
+                        )
+                        from Seans s
+                        join s.movie m
+                        join s.room r
+                        where m.title = :movieTitle
+                        and s.cancelled = false
+                        and m.active = true
+                        and r.active = true
+            """)
+    Page<SeansDto> findSeansByMovieTitle(String movieTitle, Pageable pageable);
+    //5
+    @Query("""
+            select new org.dawidz.cinema.dto.ClientDto(
+                        c.id,
+                        c.name,
+                        c.login
+                        )
+            from Seans s
+            join s.tickets t
+            join t.client c
+            where s.id = :seansId
+            and t.status = org.dawidz.cinema.model.enums.TicketStatus.CONFIRMED
+            """)
+    Page<ClientDto> findClientsBySeansId(Long seansId, Pageable pageable);
 }

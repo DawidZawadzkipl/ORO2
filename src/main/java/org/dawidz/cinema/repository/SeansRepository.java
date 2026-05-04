@@ -2,7 +2,6 @@ package org.dawidz.cinema.repository;
 
 import org.dawidz.cinema.dto.ClientDto;
 import org.dawidz.cinema.dto.SeansDto;
-import org.dawidz.cinema.model.Movie;
 import org.dawidz.cinema.model.Seans;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,8 +24,9 @@ public interface SeansRepository extends JpaRepository<Seans, Long> {
         join s.movie m
         join s.room r
         where r.id = :roomId
+        and s.cancelled = false
 """)
-    Page<SeansDto> findSeanssByRoomId(Long roomId, Pageable pageable);
+    Page<SeansDto> findSeansesByRoomId(Long roomId, Pageable pageable);
     //3
     @Query("""
             select new org.dawidz.cinema.dto.SeansDto(

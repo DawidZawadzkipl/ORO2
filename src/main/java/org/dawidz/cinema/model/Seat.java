@@ -16,7 +16,7 @@ public class Seat {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter(AccessLevel.NONE)
     private Long id;
-
+    @Column(name = "seat_row")
     private int row;
     private int seatNumber;
 

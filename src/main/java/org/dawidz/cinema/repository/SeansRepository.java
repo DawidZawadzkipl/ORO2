@@ -79,4 +79,22 @@ public interface SeansRepository extends JpaRepository<Seans, Long> {
             and t.status = org.dawidz.cinema.model.enums.TicketStatus.CONFIRMED
             """)
     Page<ClientDto> findClientsBySeansId(Long seansId, Pageable pageable);
+
+    //8
+    @Query("""
+        select count(t)
+        from Seans s
+        join s.tickets t
+        where s.id = :seansId
+        and t.status <> org.dawidz.cinema.model.enums.TicketStatus.EXPIRED
+        """)
+    long totalOccupiedSeatsBySeansId(Long seansId);
+
+    //9
+    @Query("""
+            select count(distinct s.room.id)
+            from Seans s
+            where s.movie.id = :movieId
+            """)
+    long countRoomsByMovieId(Long movieId);
 }

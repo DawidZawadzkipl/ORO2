@@ -14,12 +14,28 @@ Simple Spring Boot application for managing cinema screenings, rooms, seats, cli
 
 ## Tech stack
 
-- Java
+- Java 21+
 - Spring Boot
 - Spring Data JPA
 - Hibernate
 - H2 for tests
 - Maven
+
+## Local configuration
+
+Create a local configuration file:
+
+`src/main/resources/application-local.properties`
+
+Example:
+
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/cinema
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+
+spring.jpa.hibernate.ddl-auto=update
+```
 
 ## Main queries
 
@@ -33,9 +49,7 @@ The application includes HQL queries for:
 - occupied seats count
 - number of rooms where a movie was played
 - number of tickets bought by a client in a date range
-
 ## Running tests
-
 ```bash
 ./mvnw test
 ```
